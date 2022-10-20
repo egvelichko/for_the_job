@@ -1,0 +1,76 @@
+{% load static %}
+<!--Navbar-->
+<nav class="navbar navbar-dark" style="background-color: #24282c;">
+
+  <!-- Navbar brand -->
+  <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'img/m2_v1.svg' %}" class="logo" alt=""> БЕЗ ПОСРЕДНИКОВ</a>
+
+  <!-- Collapse button -->
+  <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+    aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i
+        class="fas fa-bars fa-1x"></i></span></button>
+
+  <!-- Collapsible content -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+
+    <!-- Links -->
+   <ul class="navbar-nav">
+        <li
+            {% if "/" == request.path %}
+                class="nav-item active mr-3"
+            {% else  %}
+                class="nav-item mr-3"
+            {% endif %}
+            >
+            <a class="nav-link dropdown text-center" href="{% url 'index' %}">Главная</a>
+        </li>
+        <li
+            {% if "about" in request.path %}
+                class="nav-item active mr-3"
+            {% else  %}
+                class="nav-item mr-3"
+            {% endif %}
+            >
+            <a class="nav-link dropdown text-center" href="{% url 'about' %}"> О нас</a>
+        </li>
+	   <li>
+          <a class="nav-link dropdown text-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Квартиры
+          </a>
+          <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'new_house' %}">Новостройки</a></li>
+            <li><a class="dropdown-item" href="{% url 'second_house' %}">Вторичка</a></li>
+			  <li><a class="dropdown-item" href="{% url 'apartment' %}">Аппартаменты</a></li>
+			  <li><a class="dropdown-item" href="{% url 'good_estate' %}">Как выбрать квартиру</a></li>
+          </ul>
+        </li>
+
+		<li>
+          <a class="nav-link dropdown text-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Арендодатели
+          </a>
+          <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'owner' %}">Собственники</a></li>
+            <li><a class="dropdown-item" href="{% url 'agancy' %}">Агенства</a></li>
+          </ul>
+        </li>
+
+		<li>
+          <a class="nav-link dropdown text-center" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Полезные ссылки
+          </a>
+          <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'useful_links' %}">Как проверить недвижимость</a></li>
+            <li><a class="dropdown-item" href="{% url 'docs' %}">Документы для оформления</a></li>
+          </ul>
+        </li>
+
+			</ul>
+
+    <!-- Links -->
+
+  </div>
+  <!-- Collapsible content -->
+
+</nav>
+<!--/.Navbar-->

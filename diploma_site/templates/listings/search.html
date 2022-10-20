@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}
+Результаты поиска
+{% endblock title %}
+{% block content %}
+	<section id="showcase-inner" class="showcase-search text-white py-5">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-md-12">
+					<h2>Быстрый поиск</h2>
+					<br>
+					<div class="search">
+						<form action="{% url 'search' %}">
+
+								<div class="form-row">
+								<!-- State -->
+								<div class="form-group col-md-2">
+
+									<label class="sr-only">Регион</label>
+									<select name="id_region" class="form-control">
+										<option selected="true" disabled="disabled">Регион</option>
+										{% for n in name_region %}
+											<option value="{{ n.id_region }}">{{ n.name_region }}</option>
+										{% endfor %}
+									</select>
+								</div>
+
+
+								<!-- City -->
+								<div class="form-group col-md-2">
+									<label class="sr-only">Город</label>
+									<select name="id_city" class="form-control">
+										<option selected="true" disabled="disabled">Город</option>
+										{% for n in name_cities %}
+											<option value="{{ n.id_city }}">{{ n.name_city }}</option>
+										{% endfor %}
+									</select>
+								</div>
+
+								<!-- Area -->
+								<div class="form-group col-md-2">
+									<label class="sr-only">Район</label>
+									<select name="id_area" class="form-control">
+										<option selected="true" disabled="disabled">Район</option>
+										{% for n in name_areas %}
+											<option value="{{ n.id_area }}">{{ n.name_area }}</option>
+										{% endfor %}
+									</select>
+								</div>
+
+								<!-- Rooms -->
+								<div class="form-group col-md-2">
+									<label class="sr-only">Комнаты</label>
+									<select name="id_area" class="form-control">
+										<option selected="true" disabled="disabled">Комнаты</option>
+										{% for n in listings %}
+											<option>{{ n.count_room }}</option>
+										{% endfor %}
+									</select>
+								</div>
+
+								<!-- Price -->
+								<div class="form-group col-md-0 pt-1"><p>Цена:</p></div>
+								<div class="form-group col-md-1">
+								  <input type="text" class="form-control" name="priceOT" placeholder="от">
+								</div>
+								<div class="form-group col-md-1">
+								  <input type="text" class="form-control" name="priceDO" placeholder="до">
+								</div>
+
+								<button class="btn btn-dangerous form-group col mb-5" type="submit">Найти</button>
+							</div>
+
+							<!-- Default dropright button -->
+							<div class="btn-group dropright btn-block">
+							  <button type="button" class="btn btn-dangerous dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Дополнительные фильтры
+							  </button>
+						  <div class="dropdown-menu btn-block" aria-labelledby="dropdownMenuLink">
+
+					  <div class="row">
+						<div class="col">
+							<h6 class="ml-2"> Объекты интерьера</h6>
+							<div class="form-check ml-3">
+							{% for n in name_obj %}
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+							  <option><label class="form-check-label" for="flexCheckChecked">
+								{{ n.name_objects }}
+							  </label></option>
+								{% endfor %}
+							</div>
+
+					</div>
+						  <div class="col">
+							  <h6> Вид из окна</h6>
+							<div class="form-check ml-3">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							  <label class="form-check-label" for="flexCheckDefault">
+								Default checkbox
+							  </label>
+							</div>
+							<div class="form-check ml-3">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+							  <label class="form-check-label" for="flexCheckChecked">
+								Checked checkbox
+							  </label>
+							</div>
+							</div>
+						  <div class="col">
+						  <h6> Тип балкона</h6>
+							<div class="form-check ml-3">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+							  <label class="form-check-label" for="flexCheckDefault">
+								Default checkbox
+							  </label>
+							</div>
+							<div class="form-check ml-3">
+							  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+							  <label class="form-check-label" for="flexCheckChecked">
+								Checked checkbox
+							  </label>
+							</div>
+							</div>
+
+
+						  </div>
+						  </div>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+				</div>
+	</section>
+
+	<!-- Breadcrumb -->
+	<section id="bc" class="mt-3">
+		<div class="container">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">
+						<a href="{% url 'index' %}">
+						<i class="fas fa-home"></i> Главная </a>
+					</li>
+					<li class="breadcrumb-item active"> Результаты поиска</li>
+				</ol>
+			</nav>
+		</div>
+	</section>
+
+	<!-- Listings -->
+<section id="listings" class="py-5">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col">
+                {% if listings %}
+                {% for estate in listings %}
+                <!-- custom flat card -->
+
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col justify-content-center p-4 d-flex flex-column position-static">
+                        <h3 class="mb-0"><a href="{{estate.link_estate }}" class="stretched-link">
+							{{estate.count_room}}-к. квартира {{estate.full_space}} м<sup><i>2</i></sup>
+                            {{estate.floor_flat}}/{{estate.floor_estate}} эт.</a></h3>
+
+                        <p><i class="fas fa-map-marker text-secondary"></i> {{estate.id_city}} {{estate.id_region}},
+                            {{estate.id_street}}</p>
+                        <h3>{{ estate.price_estate | intcomma }}₽</h3>
+                        <ul class="list-group list-group-flush pt-3">
+                        <li class="list-group-item text-secondary">
+									<i class="fas fa-calendar"></i> Объявление добавлено:
+									<span class="float-right">{{ estate.date_add }}</span>
+                        </li>
+                        </ul>
+						<hr>
+						<p> Объявление размещено на <a href="#" class="text-warning stretched-link">avito.ru</a> <a href="#" class="text-warning stretched-link">domclick.ru</a></p>
+<!--                        <p class="mb-1 text-muted">Объявление добавлено {{ estate.date_add | timesince }} назад</p>-->
+                    </div>
+                    <div class="col-5 d-lg-block">
+<ul class="list-group list-group-flush">
+    								<li class="list-group-item text-secondary">
+									<i class="fas fa-th-large"></i> Общая площадь:
+									<span class="float-right">{{ estate.full_space }}</span>
+								</li>
+								<li class="list-group-item text-secondary">
+									<i class="fas fa-th-large"></i> Жилая площадь:
+									<span class="float-right">{{ estate.live_space }}</span>
+								</li>
+    								<li class="list-group-item text-secondary">
+									<i class="fas fa-th-large"></i> Площадь кухни:
+									<span class="float-right">{{ estate.kitchen_space }}</span>
+								</li>
+								<li class="list-group-item text-secondary">
+									<i class="fas fa-bed"></i> Количество комнат:
+									<span class="float-right">{{ estate.count_room }}</span>
+								</li>
+								<li class="list-group-item text-secondary">
+									<i class="fas fa-square"></i> Этаж:
+									<span class="float-right">{{ estate.floor_flat }}
+									</span>
+								</li>
+								<li class="list-group-item text-secondary">
+									 Избранное ❤
+								</li>
+
+							</ul>
+                    </div>
+                </div>
+
+
+
+            {% endfor %}
+            {% else %}
+            <div class="col-md-12">
+                <p>No Listings Available</p>
+            </div>
+            {% endif %}
+				</div>
+
+        </div>
+
+
+        <!-- paginator -->
+			<div class="row">
+				<div class="col-md-12">
+					{% if listings.has_other_pages %}
+						<ul class="pagination">
+							{% if listings.has_previous %}
+								<a href="?page={{listings.previous_page_number}}" class="page-link">&laquo;</a>
+							{% else %}
+								<li class="page-item disabled">
+									<a class="page-link">&laquo;</a>
+								</li>
+							{% endif %}
+							{% for i in listings.paginator.page_range %}
+								{% if listings.number == i %}
+									<li class="page-item active">
+										<a class="page-link">{{ i }}</a>
+									</li>
+								{% else %}
+									<li class="page-item">
+										<a href="?page={{i}}" class="page-link">{{ i }}</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+							{% if listings.has_next %}
+								<a href="?page={{ listings.next_page_number }}" class="page-link">&raquo;</a>
+							{% else %}
+								<li class="page-item disabled">
+									<a class="page-link">&raquo;</a>
+								</li>
+							{% endif %}
+						</ul>
+					{% endif %}
+				</div>
+			</div>
+    </div>
+    </div>
+</section>
+
+{% endblock content %}
